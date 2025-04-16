@@ -2,18 +2,35 @@
 <title>Reviews</title>
 <link rel="stylesheet" type="text/css" href="/static/style.css">
 
-<h1>rendering from HTML template :)</h1>
+<body>
+    <h1>
+        movie reviews!
+        <button id="new-review-button" type="button">+ add review</button>
+    </h1>
 
-<table>
-    <tr>
-        <th>Title</th>
-        <th>Content</th>
-        <th>*****</th>
-    </tr>
-    {% for i in range(1, 10) %}
+    <table>
         <tr>
-            <td>movie</td>
-            <td>it was good</td>
-            <td>***</td>
+            <th>title</th>
+            <th>⭐️⭐️⭐️⭐️⭐️</th>
+            <th>edit</th>
+        </tr>
+        {% for review in reviews %}
+            <tr>
+                <td><a href="{{url_for('review_page', id=review.id)}}">{{ review.title }}</a></td>
+                <td><span>{% for i in range(review.rating) %}⭐️{% endfor %}</span></td>
+                <td class="dynamic"><button type="button">📝</button><button type="button">🗑️</button></td>
+        {% endfor %}
+    </table>
+
+    {#
+    The table looked awkward taking up the whole screen, so i added wireframes for some sort of advertisement or movie recommendation
+    #}
+    {% for i in range((reviews|length))%}
+        {% if (i + 5) is divisibleby(6)%}
+            <div class="ad">
+            </div>
+        {% endif %}
     {% endfor %}
-</table>
+
+
+</body>

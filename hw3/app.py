@@ -72,7 +72,10 @@ def setup():
     with app.app_context():
         db.create_all()
         if not db_manager.get():  # If database is empty, add a sample entry
-            db_manager.create("Mr. Pumpkin Man", "This is a pretty bad movie", 4)
+            db_manager.create("Mr. Pumpkin Man", "This is a pretty bad movie", 2)
+            db_manager.create("Onions: The Musical", "Sondheim really cooked on this one", 5)
+            db_manager.create("Piranesi", "Animation is so back", 4)
+            db_manager.create("Secretariat 4", "We really need to stop beating this dead horse", 1)
             print("Database initialized with sample data!")
 
 # Reset the database
@@ -89,10 +92,16 @@ def reset_db():
 """You will add all of your routes below, there is a sample one which you can use for testing"""
 
 @app.route('/')
-def show_all_reviews():
+def home():
     reviews = db_manager.get()
     url_for('static', filename='style.css')
-    return render_template('home.html')
+    return render_template('home.html', reviews = reviews)
+
+@app.route('/<id>')
+def review_page(id = Integer):
+    review = db_manager.get(id)
+    url_for('static', filename='style.css')
+    return render_template('review.html', review = review)
 
   
 # RUN THE FLASK APP
