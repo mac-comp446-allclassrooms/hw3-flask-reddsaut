@@ -5,7 +5,7 @@
 <body>
     <h1>
         {{review.title}}
-        <span style="float: right;">{% for i in range(review.rating) %}⭐️{% endfor %}</span>
+        <span style="float: right;">{% for i in range( review['rating'] ) %}⭐️{% endfor %}</span>
     </h1>
 
     <p>

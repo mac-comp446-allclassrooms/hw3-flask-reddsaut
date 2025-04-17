@@ -103,6 +103,27 @@ def review_page(id = Integer):
     url_for('static', filename='style.css')
     return render_template('review.html', review = review)
 
+@app.post('/delete/<id>')
+def delete(id = Integer):
+    db_manager.delete(id)
+    return home()
+
+@app.route('/edit/<id>')
+def edit(id = Integer):
+    content = db_manager.get(id)
+    url_for('static', filename='style.css')
+    return render_template('form.html', review = content)
+
+@app.route('/edit')
+def add():
+    url_for('static', filename='style.css')
+    return render_template('form.html', review = False)
+
+@app.route('/update/<id>')
+def update():
+    # form parsing
+    return
+
   
 # RUN THE FLASK APP
 if __name__ == "__main__":

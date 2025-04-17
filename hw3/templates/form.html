@@ -1,0 +1,40 @@
+<!doctype html>
+<title>Reviews</title>
+<link rel="stylesheet" type="text/css" href="/static/style.css">
+
+{% set x = 1 %}
+
+{% if review %}
+    {% set x = review.rating %}
+{% endif %}
+
+<body>
+    <div id='edit-form'>
+        <form method=post action=/update/{{review.id}}>
+            <input type='text' id='title' name='title'>{% if review %}{{review.title}}{% endif %}</input>
+            <br>
+            <textarea name="text" rows="10" cols="50">
+{% if review %}{{ review.text }}{% endif %}</textarea>
+            <input type="range" id="star-range" name="star-range" value="{{x}}" min="1" max="5" oninput="updateStars(this.value)">
+            <span id="stars"></span>
+        </form>
+    </div>
+
+
+    <form method=get action=/>
+        <button>⬅️</button>
+    </form>
+
+    <script>
+        function updateStars(value) {
+            let stars = "";
+            for(let i = 0; i < value; i++) {
+                stars += "⭐️";
+            }
+            document.getElementById("stars").innerHTML = stars;
+        }
+        let starRange = document.getElementById("star-range")
+        updateStars(starRange.value);
+    </script>
+
+</body>

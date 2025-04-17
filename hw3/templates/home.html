@@ -5,7 +5,9 @@
 <body>
     <h1>
         movie reviews!
-        <button id="new-review-button" type="button">+ add review</button>
+        <form method=get action=/edit>
+            <button id="new-review-button">+ add review</button>
+        </form>
     </h1>
 
     <table>
@@ -18,19 +20,14 @@
             <tr>
                 <td><a href="{{url_for('review_page', id=review.id)}}">{{ review.title }}</a></td>
                 <td><span>{% for i in range(review.rating) %}⭐️{% endfor %}</span></td>
-                <td class="dynamic"><button type="button">📝</button><button type="button">🗑️</button></td>
+                <td class="dynamic">
+                    <form method=get action=/edit/{{review.id}}>
+                        <button>📝</button>
+                    </form>
+                    <form method=post action=/delete/{{review.id}} onsubmit="return confirm('Are you sure?');">
+                        <button>🗑️</button>
+                    </form>
+                </td>
         {% endfor %}
     </table>
-
-    {#
-    The table looked awkward taking up the whole screen, so i added wireframes for some sort of advertisement or movie recommendation
-    #}
-    {% for i in range((reviews|length))%}
-        {% if (i + 5) is divisibleby(6)%}
-            <div class="ad">
-            </div>
-        {% endif %}
-    {% endfor %}
-
-
 </body>

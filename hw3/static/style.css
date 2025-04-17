@@ -22,7 +22,7 @@ table {
   font-family: arial, sans-serif;
   border-collapse: collapse;
   width: 75vw;
-  float: left;
+  margin:auto;
 }
   
 td, th {
@@ -108,5 +108,46 @@ button:active { border: 2px solid light-dark(var(--med), var(--med)); }
 
   float: right;
 }
+
+/*
+*  FORMS
+*/
+
+#edit-form {
+  width: 50%;
+  margin: auto;
+  margin-top: 5%;
+}
+
+input, textarea {
+  margin: auto;
+  display: block;
+  width: 100%;
+  padding: 8px;
+  border-radius: 8px;
+  border: none;
+  background-color: light-dark(var(--whitish), var(--med-dark));
+  color: light-dark(var(--dark), var(--whitish));
+}
+
+input {
+  font-size: 16pt;
+}
+
+textarea {
+  font-size: 12pt;
+}
+
+#star-range {
+  width: 50%;
+}
+
+#stars {
+  font-size: 16pt;
+  margin: auto;
+  display:block;
+  text-align: center;
+}
+
 
 
