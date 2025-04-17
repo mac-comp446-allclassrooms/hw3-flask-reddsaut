@@ -85,6 +85,7 @@ def reset_db():
         db.drop_all()
         db.create_all()
         print("Database reset: success!")
+    # ok so i did change this from the starter code. it just renders with a template so you don't have to manually type the url to go back
     return render_template('message.html', message='Database has been reset!')
 
 
@@ -93,34 +94,40 @@ def reset_db():
 
 @app.route('/')
 def home():
+    """Shows a table of all reviews"""
     reviews = db_manager.get()
     url_for('static', filename='style.css')
     return render_template('home.html', reviews = reviews)
 
 @app.route('/<id>')
 def review_page(id = Integer):
+    """Shows a single review"""
     review = db_manager.get(id)
     url_for('static', filename='style.css')
     return render_template('review.html', review = review)
 
 @app.post('/delete/<id>')
 def delete(id = Integer):
+    """Deletes the review at a given index"""
     db_manager.delete(id)
     return home()
 
 @app.route('/edit/<id>')
 def edit(id = Integer):
+    """Form to edit a given review"""
     content = db_manager.get(id)
     url_for('static', filename='style.css')
     return render_template('form.html', review = content)
 
 @app.route('/edit')
 def add():
+    """Form to add a new review"""
     url_for('static', filename='style.css')
     return render_template('form.html', review = False)
 
 @app.post('/update/<id>')
 def update(id = Integer):
+    """Updates a review from form data"""
     # form parsing
     title = request.form['title']
     text = request.form['text']
@@ -131,6 +138,7 @@ def update(id = Integer):
 
 @app.post('/update/')
 def create():
+    """Creates a new review from form data"""
     # form parsing
     title = request.form['title']
     text = request.form['text']

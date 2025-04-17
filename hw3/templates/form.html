@@ -1,5 +1,11 @@
 <!doctype html>
-<title>Reviews</title>
+<title>
+    {% if review %}
+        Editing {{review.title}}
+    {% else %}
+        New Review
+    {% endif %}
+</title>
 <link rel="stylesheet" type="text/css" href="/static/style.css">
 
 {% set x = 1 %}
@@ -18,7 +24,7 @@
             <input type="range" id="star-range" name="star-range" value="{{x}}" min="1" max="5" oninput="updateStars(this.value)">
             <span id="stars"></span>
 
-            <button>submit</button>
+            <button id='submit'>submit</button>
         </form>
     </div>
 
@@ -28,6 +34,8 @@
     </form>
 
     <script>
+        // Renders stars based on value in slider. default slider value pulled from db with jinja
+        // surprisingly the only DOM manipulation I did on this project. Jinja is pretty robust.
         function updateStars(value) {
             let stars = "";
             for(let i = 0; i < value; i++) {
