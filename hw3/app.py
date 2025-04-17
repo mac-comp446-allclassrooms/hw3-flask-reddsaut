@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for
+from flask import Flask, render_template, url_for, request
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Integer, String
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
@@ -85,7 +85,7 @@ def reset_db():
         db.drop_all()
         db.create_all()
         print("Database reset: success!")
-    return "Database has been reset!", 200
+    return render_template('message.html', message='Database has been reset!')
 
 
 # ROUTES
@@ -119,10 +119,25 @@ def add():
     url_for('static', filename='style.css')
     return render_template('form.html', review = False)
 
-@app.route('/update/<id>')
-def update():
+@app.post('/update/<id>')
+def update(id = Integer):
     # form parsing
-    return
+    title = request.form['title']
+    text = request.form['text']
+    rating = request.form['star-range']
+    db_manager.update(id, title, text, rating)
+    
+    return render_template('message.html', message='Updated review for ' + title + '!')
+
+@app.post('/update/')
+def create():
+    # form parsing
+    title = request.form['title']
+    text = request.form['text']
+    rating = request.form['star-range']
+    db_manager.create(title, text, rating)
+    
+    return render_template('message.html', message='Created review for ' + title + '!')
 
   
 # RUN THE FLASK APP

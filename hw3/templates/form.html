@@ -11,12 +11,14 @@
 <body>
     <div id='edit-form'>
         <form method=post action=/update/{{review.id}}>
-            <input type='text' id='title' name='title'>{% if review %}{{review.title}}{% endif %}</input>
+            <input type='text' id='title' name='title' value='{% if review %}{{review.title}}{% endif %}' placeholder='movie title'>
             <br>
-            <textarea name="text" rows="10" cols="50">
+            <textarea name="text" id='text' rows="10" placeholder='enter review here...'>
 {% if review %}{{ review.text }}{% endif %}</textarea>
             <input type="range" id="star-range" name="star-range" value="{{x}}" min="1" max="5" oninput="updateStars(this.value)">
             <span id="stars"></span>
+
+            <button>submit</button>
         </form>
     </div>
 

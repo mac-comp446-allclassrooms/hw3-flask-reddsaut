@@ -117,6 +117,10 @@ button:active { border: 2px solid light-dark(var(--med), var(--med)); }
   width: 50%;
   margin: auto;
   margin-top: 5%;
+
+  button {
+    float:right;
+  }
 }
 
 input, textarea {
