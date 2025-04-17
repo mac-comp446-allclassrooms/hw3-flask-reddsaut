@@ -1,0 +1,33 @@
+<!doctype html>
+<title>Reviews</title>
+<link rel="stylesheet" type="text/css" href="/static/style.css">
+
+<body>
+    <h1>
+        movie reviews!
+        <form method=get action=/edit>
+            <button id="new-review-button">+ add review</button>
+        </form>
+    </h1>
+
+    <table>
+        <tr>
+            <th>title</th>
+            <th>⭐️⭐️⭐️⭐️⭐️</th>
+            <th>edit</th>
+        </tr>
+        {% for review in reviews %}
+            <tr>
+                <td><a href="{{url_for('review_page', id=review.id)}}">{{ review.title }}</a></td>
+                <td><span>{% for i in range(review.rating) %}⭐️{% endfor %}</span></td>
+                <td class="dynamic">
+                    <form method=get action=/edit/{{review.id}}>
+                        <button>📝</button>
+                    </form>
+                    <form method=post action=/delete/{{review.id}} onsubmit="return confirm('Are you sure?');">
+                        <button>🗑️</button>
+                    </form>
+                </td>
+        {% endfor %}
+    </table>
+</body>

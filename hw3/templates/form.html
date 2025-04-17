@@ -1,0 +1,50 @@
+<!doctype html>
+<title>
+    {% if review %}
+        Editing {{review.title}}
+    {% else %}
+        New Review
+    {% endif %}
+</title>
+<link rel="stylesheet" type="text/css" href="/static/style.css">
+
+{% set x = 1 %}
+
+{% if review %}
+    {% set x = review.rating %}
+{% endif %}
+
+<body>
+    <div id='edit-form'>
+        <form method=post action=/update/{{review.id}}>
+            <input type='text' id='title' name='title' value='{% if review %}{{review.title}}{% endif %}' placeholder='movie title'>
+            <br>
+            <textarea name="text" id='text' rows="10" placeholder='enter review here...'>
+{% if review %}{{ review.text }}{% endif %}</textarea>
+            <input type="range" id="star-range" name="star-range" value="{{x}}" min="1" max="5" oninput="updateStars(this.value)">
+            <span id="stars"></span>
+
+            <button id='submit'>submit</button>
+        </form>
+    </div>
+
+
+    <form method=get action=/>
+        <button>⬅️</button>
+    </form>
+
+    <script>
+        // Renders stars based on value in slider. default slider value pulled from db with jinja
+        // surprisingly the only DOM manipulation I did on this project. Jinja is pretty robust.
+        function updateStars(value) {
+            let stars = "";
+            for(let i = 0; i < value; i++) {
+                stars += "⭐️";
+            }
+            document.getElementById("stars").innerHTML = stars;
+        }
+        let starRange = document.getElementById("star-range")
+        updateStars(starRange.value);
+    </script>
+
+</body>

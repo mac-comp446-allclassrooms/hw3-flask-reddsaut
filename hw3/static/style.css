@@ -1,0 +1,124 @@
+:root {
+  color-scheme: light dark;
+
+  /* Color Theme Swatches in Hex */
+  --dark: #012E40;
+  --med-dark: #024959;
+  --med: #026773;
+  --med-light: #3CA6A6;
+  --whitish: #F2E3D5;
+}
+
+body {
+  color: light-dark(var(--dark), var(--whitish));
+  background-color: light-dark(var(--med-light), var(--dark));
+}
+
+/*
+*  TABLE
+*/
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 75vw;
+  margin:auto;
+}
+  
+td, th {
+  border: 0px solid light-dark(var(--med-dark), var(--med-light));
+  text-align: left;
+  padding: 8px;
+}
+
+/* sets the edit row to small */
+td.dynamic {
+  width: 86px;
+}
+  
+tr:nth-child(even) {
+  background-color: light-dark(var(--med), var(--med));
+  
+  a:hover {
+    color: light-dark(var(--dark), var(--dark));
+  }
+}
+
+a {
+  color: inherit;
+}
+a:hover {
+  color: light-dark(var(--med), var(--med));
+}
+a:active {
+  color: light-dark(var(--dark), var(--med-light));
+}
+
+/*
+*  BUTTONS
+*/
+
+button {
+  height: 30px;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  margin: 2px;
+
+  font-size: 12pt;
+
+  color: var(--whitish);
+  background-color: var(--med-dark);
+}
+
+button:hover { border: 2px solid light-dark(var(--dark), var(--med-light)); }
+
+button:active { border: 2px solid light-dark(var(--med), var(--med)); }
+
+#new-review-button { float: right; }
+
+/*
+*  FORMS
+*/
+
+#edit-form {
+  width: 50%;
+  margin: auto;
+  margin-top: 5%;
+}
+
+#submit {
+  float:right;
+}
+
+input, textarea {
+  margin: auto;
+  display: block;
+  width: 100%;
+  padding: 8px;
+  border-radius: 8px;
+  border: none;
+  background-color: light-dark(var(--whitish), var(--med-dark));
+  color: light-dark(var(--dark), var(--whitish));
+}
+
+input {
+  font-size: 16pt;
+}
+
+textarea {
+  font-size: 12pt;
+}
+
+#star-range {
+  width: 50%;
+}
+
+#stars {
+  font-size: 16pt;
+  margin: auto;
+  display:block;
+  text-align: center;
+}
+
+
+

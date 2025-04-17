@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template, url_for, request
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Integer, String
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
@@ -72,7 +72,10 @@ def setup():
     with app.app_context():
         db.create_all()
         if not db_manager.get():  # If database is empty, add a sample entry
-            db_manager.create("Mr. Pumpkin Man", "This is a pretty bad movie", 4)
+            db_manager.create("Mr. Pumpkin Man", "This is a pretty bad movie", 2)
+            db_manager.create("Onions: The Musical", "Sondheim really cooked on this one", 5)
+            db_manager.create("Piranesi", "Animation is so back", 4)
+            db_manager.create("Secretariat 4", "We really need to stop beating this dead horse", 1)
             print("Database initialized with sample data!")
 
 # Reset the database
@@ -82,15 +85,67 @@ def reset_db():
         db.drop_all()
         db.create_all()
         print("Database reset: success!")
-    return "Database has been reset!", 200
+    # ok so i did change this from the starter code. it just renders with a template so you don't have to manually type the url to go back
+    return render_template('message.html', message='Database has been reset!')
 
 
 # ROUTES
 """You will add all of your routes below, there is a sample one which you can use for testing"""
 
 @app.route('/')
-def show_all_reviews():
-    return 'Welcome to Movie Theater reviews!'
+def home():
+    """Shows a table of all reviews"""
+    reviews = db_manager.get()
+    url_for('static', filename='style.css')
+    return render_template('home.html', reviews = reviews)
+
+@app.route('/<id>')
+def review_page(id = Integer):
+    """Shows a single review"""
+    review = db_manager.get(id)
+    url_for('static', filename='style.css')
+    return render_template('review.html', review = review)
+
+@app.post('/delete/<id>')
+def delete(id = Integer):
+    """Deletes the review at a given index"""
+    db_manager.delete(id)
+    return home()
+
+@app.route('/edit/<id>')
+def edit(id = Integer):
+    """Form to edit a given review"""
+    content = db_manager.get(id)
+    url_for('static', filename='style.css')
+    return render_template('form.html', review = content)
+
+@app.route('/edit')
+def add():
+    """Form to add a new review"""
+    url_for('static', filename='style.css')
+    return render_template('form.html', review = False)
+
+@app.post('/update/<id>')
+def update(id = Integer):
+    """Updates a review from form data"""
+    # form parsing
+    title = request.form['title']
+    text = request.form['text']
+    rating = request.form['star-range']
+    db_manager.update(id, title, text, rating)
+    
+    return render_template('message.html', message='Updated review for ' + title + '!')
+
+@app.post('/update/')
+def create():
+    """Creates a new review from form data"""
+    # form parsing
+    title = request.form['title']
+    text = request.form['text']
+    rating = request.form['star-range']
+    db_manager.create(title, text, rating)
+    
+    return render_template('message.html', message='Created review for ' + title + '!')
 
   
 # RUN THE FLASK APP

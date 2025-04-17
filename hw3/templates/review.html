@@ -1,0 +1,18 @@
+<!doctype html>
+<title>{{review.title}}</title>
+<link rel="stylesheet" type="text/css" href="/static/style.css">
+
+<body>
+    <h1>
+        {{review.title}}
+        <span style="float: right;">{% for i in range( review['rating'] ) %}⭐️{% endfor %}</span>
+    </h1>
+
+    <p>
+        {{review.text}}
+    </p>
+    <form method=get action=/>
+        <button>⬅️</button>
+    </form>
+
+</body>
